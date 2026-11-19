@@ -6,11 +6,12 @@ DOMPurify niż w oficjalnych wydaniach. Kod jest publiczny zgodnie z licencją G
 | Wydanie | Baza | DOMPurify | Gałąź |
 |---|---|---|---|
 | `7.9.3-compan.1` (wersja npm `7.9.3+compan.1`) | `7.9.3` | 3.2.6 → 3.4.18 | `compan/7.9.3-dompurify-3.4.18` |
+| `7.9.3-compan.2` (wersja npm `7.9.3+compan.2`) | `7.9.3` | 3.4.18, paczka zawiera CHANGELOG forka | `compan/7.9.3-dompurify-3.4.18` |
 
 Paczka jest używana w `docusafe-web-ui` i `dockind3-ui/dockind`:
 
 ```json
-"tinymce": "https://github.com/NawrockiK/tinymce_compan/releases/download/7.9.3-compan.1/tinymce-7.9.3-compan.1.tgz"
+"tinymce": "https://github.com/NawrockiK/tinymce_compan/releases/download/7.9.3-compan.2/tinymce-7.9.3-compan.2.tgz"
 ```
 
 ## Jak powstaje paczka
@@ -21,6 +22,7 @@ własnym procesem. Dlatego `compan/pack.sh`:
 
 1. pobiera oficjalną paczkę `tinymce@<baza>` z npm,
 2. podmienia w niej tylko pliki zawierające DOMPurify oraz `notices.txt` na wynik builda z tego repozytorium,
+   a `CHANGELOG.md` na `modules/tinymce/CHANGELOG.md` z wpisem tego wydania,
 3. ustawia `version` i `repository` w `package.json`,
 4. sprawdza, że w paczce jest wyłącznie wersja DOMPurify z `modules/tinymce/package.json`, a liczba plików
    zgadza się z oficjalną paczką,
@@ -43,7 +45,7 @@ git checkout compan/7.9.3-dompurify-3.4.18          # albo nowa gałąź od tagu
 # 1. w modules/tinymce/package.json ustaw dokładną wersję "dompurify": "X.Y.Z"
 # 2. zaktualizuj w yarn.lock tylko blok dompurify (version, resolved, integrity z `npm view dompurify@X.Y.Z dist`)
 # 3. zaktualizuj wersję DOMPurify w NOTICES.txt i modules/tinymce/src/core/text/tinymce-license-headers.js
-# 4. dopisz wpis do modules/tinymce/CHANGELOG.md (wymóg GPL: opis zmiany)
+# 4. dopisz wpis "## 7.9.3+compan.2 - <data>" do modules/tinymce/CHANGELOG.md (wymóg GPL; pack.sh go sprawdza)
 compan/pack.sh 7.9.3+compan.2 --build               # wynik: ../tinymce_compan-dist/tinymce-7.9.3-compan.2.tgz
 git commit -am "Bump bundled DOMPurify -> X.Y.Z"
 git tag 7.9.3-compan.2

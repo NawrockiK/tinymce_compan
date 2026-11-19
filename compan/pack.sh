@@ -80,6 +80,11 @@ for f in "${FILES[@]}"; do
   echo "   $f"
 done
 
+echo "== CHANGELOG.md"
+grep -q "^## ${VERSION//./\\.} " "$MODULE_DIR/CHANGELOG.md" \
+  || fail "brak wpisu '## $VERSION - <data>' w modules/tinymce/CHANGELOG.md"
+cp "$MODULE_DIR/CHANGELOG.md" "$PKG_DIR/CHANGELOG.md"
+
 echo "== package.json"
 (cd "$PKG_DIR" && node -e "
 const fs = require('fs')
